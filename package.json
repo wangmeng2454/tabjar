@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
+  "license": "MIT",
   "description": "TabJar 标签罐 —— 标签页收纳扩展（华为浏览器 / Chrome 通用，Manifest V3 + TypeScript）",
   "scripts": {
     "dev": "vite",
