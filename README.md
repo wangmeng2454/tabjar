@@ -1,5 +1,7 @@
 # TabJar 标签罐（TypeScript + Vite）
 
+![License](https://img.shields.io/github/license/wangmeng2454/tabjar) ![Manifest V3](https://img.shields.io/badge/Manifest-V3-blue) ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white) ![Vite](https://img.shields.io/badge/Vite-5.x-646CFF?logo=vite&logoColor=white)
+
 一个 Manifest V3 标签页收纳扩展，华为浏览器 / Chrome / Edge 通用。
 
 点一下，把所有标签页收进一个清爽的列表、立刻释放内存；随时一键找回。
