@@ -346,7 +346,11 @@ function renderItem(group: TabGroup, index: number): HTMLElement {
   // 图标 + 域名小标签 + 标题链接
   const favicon = renderFavicon(tab)
   const host = el('span', { className: 'host', text: hostOf(tab.url) ?? '本地' })
-  const link = el('a', { className: 'link', text: tab.title, title: tab.title })
+  // 气泡 = 补全增量信息（TK-214）：第一行完整标题（兜底超两行的超长标题），
+  // 第二行完整 URL（列表上永远不可见）。title 相等时兜底 TK-311 导入的
+  // 「标题=URL」条目，不重复显示两遍
+  const tip = tab.title === tab.url ? tab.title : `${tab.title}\n${tab.url}`
+  const link = el('a', { className: 'link', text: tab.title, title: tip })
   link.href = tab.url
   // 拦截浏览器默认跳转，改用 chrome.tabs.create 打开（对特殊页面兼容性更好）
   link.addEventListener('click', (e) => {
