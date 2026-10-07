@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <title>TabJar 标签罐</title>
+  <link rel="stylesheet" href="tabs.css" />
+</head>
+<body>
+  <!-- ===================== 顶部栏 ===================== -->
+  <header>
+    <h1>TabJar 标签罐</h1>
+
+    <!-- 搜索框：tabs.ts 里监听 input 事件做实时过滤 -->
+    <input id="search" type="search" placeholder="搜索标题或网址…" autocomplete="off" />
+
+    <!-- 统计信息由 tabs.ts 填充 -->
+    <div class="summary" id="summary"></div>
+
+    <div class="actions">
+      <!-- 撤销按钮：只有确实存在可撤销的快照时才显示 -->
+      <button id="btn-undo" class="ghost" hidden>撤销上次收纳</button>
+      <button id="btn-export" class="ghost">导出</button>
+      <button id="btn-import" class="ghost">导入</button>
+      <button id="btn-settings" class="ghost">设置</button>
+      <button id="btn-restore-all" class="primary">全部恢复</button>
+      <button id="btn-clear-all" class="ghost danger">清空</button>
+    </div>
+  </header>
+
+  <!-- ===================== 设置面板（默认隐藏） ===================== -->
+  <section id="settings-panel" class="panel" hidden>
+    <label class="opt">
+      <input type="checkbox" id="opt-dedupe" />
+      <span>收纳时跳过重复网址（列表里已有的不再重复存）</span>
+    </label>
+    <label class="opt">
+      <input type="checkbox" id="opt-pinned" />
+      <span>收纳时忽略已固定的标签页</span>
+    </label>
+    <label class="opt">
+      <input type="checkbox" id="opt-newwin" />
+      <span>恢复整组时打开新窗口</span>
+    </label>
+    <div class="opt theme-row">
+      <span>主题</span>
+      <select id="opt-theme">
+        <option value="auto">跟随系统</option>
+        <option value="light">浅色</option>
+        <option value="dark">深色</option>
+      </select>
+    </div>
+  </section>
+
+  <!-- ===================== 导出格式菜单（默认隐藏） ===================== -->
+  <section id="export-menu" class="menu" hidden>
+    <button data-fmt="json">JSON —— 可再导入，完整保留</button>
+    <button data-fmt="html">HTML —— 双击即可打开的网页书签</button>
+    <button data-fmt="txt">TXT —— 纯文本，方便粘贴到笔记</button>
+  </section>
+
+  <!-- ===================== 批量操作栏（选中条目后出现） ===================== -->
+  <div id="bulk-bar" class="bulkbar" hidden>
+    <span id="bulk-count">已选 0 项</span>
+    <div class="bulk-actions">
+      <button id="bulk-restore" class="primary">恢复所选</button>
+      <button id="bulk-move" class="ghost">移到新分组</button>
+      <button id="bulk-delete" class="ghost danger">删除所选</button>
+      <button id="bulk-cancel" class="ghost">取消</button>
+    </div>
+  </div>
+
+  <!-- 分组列表：tabs.ts 里 render() 生成的 DOM 挂在这里 -->
+  <main id="list"></main>
+
+  <!-- 列表为空时显示的提示（默认 hidden） -->
+  <p id="empty" class="empty" hidden>
+    暂无收纳的标签页。<br />
+    点击工具栏上的 TabJar 图标，或右键页面选择「收纳」。
+  </p>
+
+  <!-- 隐藏的文件选择框，配合「导入」按钮使用 -->
+  <input id="file-input" type="file" accept=".json,.txt,.md,text/plain,application/json" hidden />
+
+  <!-- type="module" 使这个 script 支持 import 语法 -->
+  <script type="module" src="tabs.ts"></script>
+</body>
+</html>

@@ -1,0 +1,332 @@
+/* ============================================================
+   tabs.css —— 列表页样式
+   ------------------------------------------------------------
+   所有颜色都定义在 :root 的 CSS 变量里，
+   深色主题只需要覆写这些变量，不用重复写整套样式。
+   ============================================================ */
+
+:root {
+  --brand: #cf0a2c;
+  --brand-soft: #fff1f3;
+  --bg: #f6f7f9;
+  --card: #ffffff;
+  --head: #fafbfc;
+  --text: #1a1a1a;
+  --muted: #666f7a;
+  --border: #e5e8ec;
+  --hover: #fff5f6;
+  --link: #1a4f9c;
+  --danger: #d93025;
+  --shadow: 0 1px 2px rgba(15, 20, 30, 0.04);
+}
+
+/* 深色主题：只换变量，其它规则全部复用 */
+html[data-theme='dark'] {
+  --brand: #ff5470;
+  --brand-soft: #2a1a20;
+  --bg: #15171a;
+  --card: #1f2227;
+  --head: #26292f;
+  --text: #e8eaed;
+  --muted: #9aa3ad;
+  --border: #33373d;
+  --hover: #2a1e22;
+  --link: #8ab4f8;
+  --danger: #ff6b60;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* 🚨 必须显式声明：否则 .panel/.menu/.bulkbar 里的 display:flex
+   会压掉浏览器默认的 [hidden]{display:none}，导致 hidden 属性失效 */
+[hidden] { display: none !important; }
+
+body {
+  font-family: "HarmonyOS Sans", "Microsoft YaHei", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px 16px 96px;
+  transition: background 0.15s, color 0.15s;
+}
+
+/* ---------------- 顶部栏 ---------------- */
+header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+header h1 { font-size: 22px; color: var(--brand); }
+
+#search {
+  flex: 1 1 220px;
+  min-width: 180px;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: var(--text);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  outline: none;
+}
+#search:focus { border-color: var(--brand); }
+
+.summary { color: var(--muted); font-size: 13px; flex: 0 1 auto; }
+.actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* ---------------- 按钮 ---------------- */
+button {
+  border: none;
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  background: var(--brand);
+  color: #fff;
+  transition: opacity 0.15s, background 0.15s;
+}
+button:hover { opacity: 0.85; }
+button.primary { background: var(--brand); color: #fff; }
+button.ghost {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border);
+}
+button.ghost:hover { color: var(--text); opacity: 1; background: var(--head); }
+button.danger:hover { background: var(--danger); color: #fff; border-color: var(--danger); }
+button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* ---------------- 设置面板 / 导出菜单 ---------------- */
+.panel, .menu {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.menu { flex-direction: column; align-items: stretch; }
+.menu button {
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+  border: 1px solid var(--border);
+  padding: 10px 14px;
+}
+.menu button:hover { background: var(--brand-soft); opacity: 1; }
+
+.opt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+}
+.opt input[type='checkbox'] { width: 15px; height: 15px; accent-color: var(--brand); }
+.theme-row { justify-content: flex-start; }
+.theme-row select {
+  padding: 5px 10px;
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--text);
+  background: var(--head);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+/* ---------------- 批量操作栏 ---------------- */
+.bulkbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  background: var(--card);
+  border: 1px solid var(--brand);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+#bulk-count { font-size: 13px; color: var(--brand); }
+.bulk-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-left: auto; }
+
+/* ---------------- 分组卡片 ---------------- */
+.group {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 14px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.group.starred { border-color: var(--brand); }
+
+/* 折叠开关（TK-212）：颜色走主题变量，深浅色对比度自动跟随 */
+.caret {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1;
+  padding: 0 2px;
+  cursor: pointer;
+}
+.caret:hover { color: var(--text); }
+
+/* 折叠态：条目是「不渲染」而非 hidden（见 tabs.ts renderGroup），
+   只剩分组头，去掉其底部分隔线避免卡片底部悬着一条边框 */
+.group.collapsed .group-head { border-bottom: none; }
+
+.group-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: var(--head);
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--muted);
+}
+.group-head .spacer { flex: 1; }
+.group-head .btns { display: flex; gap: 6px; }
+.group-head .btns button { padding: 4px 10px; font-size: 12px; }
+
+.star {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-size: 15px;
+  padding: 0 2px;
+  line-height: 1;
+}
+.star.on { color: #f5a524; opacity: 1; }
+.star:hover { opacity: 0.7; }
+
+/* 分组名：可点击编辑 */
+.group-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  cursor: text;
+  padding: 2px 6px;
+  border-radius: 6px;
+  border: 1px dashed transparent;
+  max-width: 320px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.group-name:hover { border-color: var(--border); background: var(--bg); }
+.group-name input {
+  font: inherit;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--brand);
+  border-radius: 6px;
+  padding: 2px 6px;
+  width: 240px;
+  outline: none;
+}
+
+/* ---------------- 单条标签页 ---------------- */
+.item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 16px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+}
+.item:last-child { border-bottom: none; }
+.item:hover { background: var(--hover); }
+.item.checked { background: var(--brand-soft); }
+
+.item input[type='checkbox'] {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  accent-color: var(--brand);
+  cursor: pointer;
+}
+
+.favicon {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+  border-radius: 3px;
+  object-fit: cover;
+}
+.favicon-fallback {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+  border-radius: 3px;
+  font-size: 10px;
+  line-height: 16px;
+  text-align: center;
+  color: #fff;
+  background: var(--muted);
+}
+
+.item .link {
+  flex: 1;
+  font-size: 14px;
+  color: var(--link);
+  text-decoration: none;
+  /* 最多两行截断（TK-213 / F-3.10）：-webkit-box + line-clamp。
+     overflow-wrap: anywhere 保证标题兜底为长 URL 时也能折行，不撑破布局 */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+.item .link:hover { text-decoration: underline; }
+
+.item .host {
+  font-size: 11px;
+  color: var(--muted);
+  background: var(--bg);
+  padding: 2px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.item .del {
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-size: 15px;
+  padding: 0 4px;
+  opacity: 0.5;
+}
+.item .del:hover { color: var(--danger); opacity: 1; }
+
+/* ---------------- 其它 ---------------- */
+.empty {
+  text-align: center;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.9;
+  padding: 64px 0;
+}
+
+.search-empty {
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+  padding: 40px 0;
+}

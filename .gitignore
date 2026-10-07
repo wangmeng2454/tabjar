@@ -1,0 +1,26 @@
+# 依赖与构建产物
+node_modules/
+dist/
+.npm-cache/
+
+# vite 临时文件
+vite.config.ts.timestamp-*.mjs
+
+# 打包私钥与产物（绝不提交）
+*.pem
+*.crx
+*.zip
+
+# ===== AI 协作相关（按要求不入库，仅保留在本地）=====
+# AI 编程助手约定与提示词
+CODEBUDDY.md
+CODEBUDDY.local.md
+.codebuddy/
+
+# 功能任务卡与交接/验收文档（面向 AI 工作流）
+docs/tasks/
+
+# AI 执行报告
+analysis-report.md
+task-report.md
+release-report.md
